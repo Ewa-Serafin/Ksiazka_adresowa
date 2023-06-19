@@ -554,4 +554,114 @@ void deletePerson(vector<Person>& people, const vector<User>& users, const strin
     system("pause");
 }
 
+void updateField (const string& label, string& field) {
+    cout << "Nowe " << label << ": ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, field);
+}
+
+void editData(Person& person) {
+    bool exitEditMenu = false;
+
+    while (!exitEditMenu) {
+        char choice;
+
+        editPersonMenu();
+
+        cout << "Edytujesz dane ponizszej osoby: " << endl;
+        cout << endl;
+        displayPerson(person);
+        cout << endl;
+
+        cout << "Jakie dane chcesz edytowac : ";
+        cin>> choice ;
+        cout << endl;
+
+        bool dataChanged = false;
+
+        switch (choice) {
+        case '1':
+            updateField("imie", person.firstName);
+            break;
+        case '2':
+            updateField("nazwisko", person.lastName);
+            break;
+        case '3':
+            updateField("numer telefonu", person.phoneNumber);
+            break;
+        case '4':
+            updateField("email", person.email);
+            break;
+        case '5':
+            updateField("adres", person.address);
+            break;
+        case '6':
+            cout << "Powrot do menu edycji." << endl;
+            exitEditMenu = true;
+            break;
+        default:
+            cout << "Nieprawidlowy wybor. Sprobuj ponownie." << endl;
+            system("pause");
+            break;
+        }
+        if (dataChanged) {
+            cout << "Dane zostaly zmienione." << endl;
+            Sleep(1000);
+            cout << endl;
+        }
+        if (!exitEditMenu) {
+            cout << endl;
+            cout << "Czy chcesz edytowac inne dane dla tego adresata (t/n): ";
+
+            char confirm;
+            cin >> confirm;
+
+            if (confirm != 't' && confirm != 'T') {
+                exitEditMenu = true;
+                Sleep(1000);
+            }
+        }
+    }
+}
+
+void editPerson(vector<Person>& people, const vector<User>& users, const string& loggedInUsername) {
+    if (people.empty()) {
+        cout << "Ksiazka adresowa jest pusta." << endl;
+        cout << endl;
+        return;
+    }
+    system("cls");
+    bool validID = false;
+    cout << ">> WYBIERZ ADRESATA DO EDYCJI <<" <<endl;
+    cout << endl;
+    displayEditableIDs(people, users, loggedInUsername);
+    while (!validID) {
+
+        int editPersonID;
+        cout << "Podaj ID osoby do edycji (Wybierz 0 aby powrocic do menu glownego): ";
+        cin >> editPersonID;
+        cout << endl;
+
+        if (editPersonID == 0) {
+            break;
+        }
+
+        bool personFound = false;
+
+        for (Person& person : people) {
+            if (person.userID == getLoggedInUserID(loggedInUsername, users) && person.id == editPersonID) {
+                personFound = true;
+                validID = true;
+                editData(person);
+                break;
+            }
+        }
+
+        if (!personFound) {
+            cout << "Osoba o podanym ID nie istnieje lub nie masz uprawnien do jej edycji." << endl;
+        }
+    }
+    saveChangesToFile(people);
+}
+
 
