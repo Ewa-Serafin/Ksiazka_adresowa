@@ -12,6 +12,7 @@
 
 using namespace std;
 
+
 struct User {
     int id = 0;
     string username = "", password = "", loggedInUsername;
@@ -23,6 +24,7 @@ struct Person {
     string firstName = "", lastName = "", phoneNumber = "", email = "", address = "";
 };
 
+//Funkcje pomocnicze
 string readLine() {
     string input;
     cin.sync();
@@ -38,23 +40,7 @@ int getLoggedInUserID(const string& loggedInUsername, const vector<User>& users)
     }
     return -1;
 }
-
-string readLine() {
-    string input;
-    cin.sync();
-    getline(cin, input);
-    return input;
-}
-
-int getLoggedInUserID(const string& loggedInUsername, const vector<User>& users) {
-    for (const User& user : users) {
-        if (user.username == loggedInUsername) {
-            return user.id;
-        }
-    }
-    return -1;
-}
-
+//user function
 void readUserFromFile(vector<User>& users) {
     ifstream file("users.txt", ios::in);
 
@@ -199,6 +185,7 @@ void loggedOut(bool isLoggedIn) {
     }
 }
 
+//menu
 int readChoice() {
     int choice;
     cout << endl;
@@ -258,6 +245,8 @@ void editPersonMenu() {
     cout << "6. Powrot do menu glownego" << endl;
     cout << endl;
 }
+
+//Person/addresse function
 void readDataFromFile(vector<Person>& people) {
     people.clear();
 
@@ -733,4 +722,3 @@ int main() {
     }
     return 0;
 }
-
