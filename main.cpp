@@ -22,3 +22,19 @@ struct Person {
     int userID;
     string firstName = "", lastName = "", phoneNumber = "", email = "", address = "";
 };
+
+string readLine() {
+    string input;
+    cin.sync();
+    getline(cin, input);
+    return input;
+}
+
+int getLoggedInUserID(const string& loggedInUsername, const vector<User>& users) {
+    for (const User& user : users) {
+        if (user.username == loggedInUsername) {
+            return user.id;
+        }
+    }
+    return -1;
+}
