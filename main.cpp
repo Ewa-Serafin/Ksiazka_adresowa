@@ -351,3 +351,39 @@ int getLastPersonID(const vector<Person>& people) {
     }
     return maxPersonID;
 }
+
+void addPerson(vector<Person>& people, const vector<User>& users, const string& loggedInUsername) {
+    system("cls");
+    Person person;
+    cout << ">> NOWY ADRESAT <<" << endl;
+    cout << "------------------" << endl;
+    cout << "Podaj imie: ";
+    person.firstName = readLine();
+
+    cout << "Podaj nazwisko: ";
+    person.lastName = readLine();
+
+    cout << "Podaj numer telefonu: ";
+    person.phoneNumber = readLine();
+
+    cout << "Podaj e-mail: ";
+    person.email = readLine();
+
+    cout << "Podaj adres: ";
+    person.address= readLine();
+
+    readDataFromFile(people);
+
+    int lastPersonID = getLastPersonID(people);
+    person.id = lastPersonID + 1;
+    person.userID = getLoggedInUserID(loggedInUsername, users);
+
+    cout << endl;
+    people.push_back(person);
+
+    cout << "Osoba zostala poprawnie dodana do ksiazki adresowej." << endl;
+    cout << endl;
+    Sleep(1000);
+
+    saveToFile(people);
+}
