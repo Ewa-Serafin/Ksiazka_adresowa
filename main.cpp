@@ -198,3 +198,63 @@ void loggedOut(bool isLoggedIn) {
         Sleep(1000);
     }
 }
+
+int readChoice() {
+    int choice;
+    cout << endl;
+    cout << "Twoj wybor: ";
+    cin >> choice;
+    cout << endl;
+
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Nieprawidlowy wybor. Sprobuj ponownie." << endl;
+        Sleep(1000);
+    }
+    return choice;
+}
+
+int loginMenu() {
+    system("cls");
+    cout << ">> MENU GLOWNE <<" << endl;
+    cout << "----------------------" << endl;
+    cout << "1. Logowanie" << endl;
+    cout << "2. Rejestracja" << endl;
+    cout << "3. Koniec programu" << endl;
+    cout << "----------------------" << endl;
+    cout << endl;
+
+    return readChoice();
+}
+
+int userMenu() {
+    system("cls");
+    cout << ">> Menu uzytkownika <<" << endl;
+    cout << "----------------------------------------" << endl;
+    cout << "1. Dodaj nowa osobe " << endl;
+    cout << "2. Wyszukaj po imieniu" << endl;
+    cout << "3. Wyszukaj po nazwisku" << endl;
+    cout << "4. Wyswietl wszystkich adresatow" << endl;
+    cout << "5. Usun adresata" << endl;
+    cout << "6. Edytuj adresata" << endl;
+    cout << "----------------------------------------" << endl;
+    cout << "7. Zmien haslo " << endl;
+    cout << "8. Wyloguj sie " << endl;
+    cout << "----------------------------------------" << endl;
+
+    return readChoice();
+}
+
+void editPersonMenu() {
+
+    cout << ">> EDYCJA DANYCH ADRESATA <<" << endl;
+    cout << "----------------------------------------" << endl;
+    cout << "1. Imie" << endl;
+    cout << "2. Nazwisko" << endl;
+    cout << "3. Numer telefonu" << endl;
+    cout << "4. Email" << endl;
+    cout << "5. Adres" << endl;
+    cout << "6. Powrot do menu glownego" << endl;
+    cout << endl;
+}
