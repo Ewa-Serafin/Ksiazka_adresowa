@@ -505,4 +505,53 @@ void displayEditableIDs(const vector<Person>& people, const vector<User>& users,
     cout << endl << endl;
 }
 
+void deletePerson(vector<Person>& people, const vector<User>& users, const string& loggedInUsername) {
+    if (people.empty()) {
+        cout << "Ksiazka adresowa jest pusta." << endl << endl;
+        return;
+    }
+    system("cls");
+
+    cout << ">> USUWANIE WYBRANEGO ADRESATA <<" <<endl;
+    cout << "---------------------------------" <<endl;
+
+    displayEditableIDs(people, users, loggedInUsername);
+
+    int id;
+    cout << "Podaj ID osoby do usuniecia (0 aby anulowac): ";
+    cin >> id;
+
+    if (id == 0) {
+        return;
+    }
+
+    for (auto it = people.begin(); it != people.end(); ++it) {
+        if (it->id == id && it->userID == getLoggedInUserID(loggedInUsername, users)) {
+
+            cout << endl;
+            cout << "Usuwasz: ";
+            cout << endl;
+
+            displayPerson(*it);
+            cout << endl;
+            cout << "Czy na pewno chcesz usunac ta osobe? (t/n): ";
+
+            char confirm;
+            cin >> confirm;
+
+            if (confirm == 't' || confirm == 'T') {
+                it = people.erase(it);
+                cout << "Adresat zostal poprawnie usuniety." << endl;
+                break;
+            } else {
+                cout << "Anulowano usuwanie adresata." << endl;
+                break;
+            }
+        }
+    }
+    saveChangesToFile(people);
+    cout << endl;
+    system("pause");
+}
+
 
