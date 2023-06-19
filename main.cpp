@@ -11,3 +11,14 @@
 #include<algorithm>
 
 using namespace std;
+
+struct User {
+    int id = 0;
+    string username = "", password = "", loggedInUsername;
+};
+
+struct Person {
+    int id = 0;
+    int userID;
+    string firstName = "", lastName = "", phoneNumber = "", email = "", address = "";
+};
