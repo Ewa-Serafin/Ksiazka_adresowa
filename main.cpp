@@ -423,3 +423,68 @@ void displayAllPeople(const vector<Person>& people, const vector<User>& users, c
     cout << endl;
     system("pause");
 }
+
+void searchByFirstName(const vector<Person>& people, const vector<User>& users, const string& loggedInUsername) {
+    system("cls");
+    bool nameFound = false;
+    string firstName;
+
+    cout << ">> WYSZUKUJESZ PO IMIENIU <<" <<endl;
+    cout << "----------------------------" <<endl;
+    cout << "Podaj imie: ";
+    firstName = readLine();
+    cout << endl;
+
+    if (people.empty()) {
+        cout << "Ksiazka adresowa pusta." << endl;
+        cout << endl;
+        system("pause");
+        return;
+    }
+
+    for (const Person& person : people) {
+        if (person.userID == getLoggedInUserID(loggedInUsername, users) && person.firstName == firstName) {
+            displayPerson(person);
+            cout << endl;
+            nameFound = true;
+        }
+    }
+
+    if (!nameFound) {
+        cout << "Nie znaleziono osob o podanym imieniu." << endl;
+        cout << endl;
+    }
+    system("pause");
+}
+
+void searchByLastName(const vector<Person>& people, const vector<User>& users, const string& loggedInUsername) {
+    system("cls");
+    bool nameFound = false;
+    string lastName;
+    cout << " >> WYSZUKUJESZ PO NAZWISKU <<" <<endl;
+    cout << "------------------------------" <<endl;
+    cout << "Podaj nazwisko: ";
+    lastName = readLine();
+    cout << endl;
+
+    if (people.empty()) {
+        cout << "Ksiazka adresowa pusta." << endl;
+        cout << endl;
+        system("pause");
+        return;
+    }
+    for (const Person& person : people) {
+        if (person.userID == getLoggedInUserID(loggedInUsername, users) && person.lastName == lastName) {
+            displayPerson(person);
+            cout << endl;
+            nameFound = true;
+        }
+    }
+
+    if (!nameFound) {
+        cout << "Nie znaleziono osob o podanym nazwisku." << endl;
+        cout << endl;
+    }
+    system("pause");
+}
+
