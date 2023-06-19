@@ -341,3 +341,13 @@ void saveChangesToFile(const vector<Person>& people) {
         cerr << "Nie udalo sie otworzyc pliku." << endl;
     }
 }
+
+int getLastPersonID(const vector<Person>& people) {
+    int maxPersonID = 0;
+    for (const Person& existingPerson : people) {
+        if (existingPerson.id > maxPersonID) {
+            maxPersonID = existingPerson.id;
+        }
+    }
+    return maxPersonID;
+}
