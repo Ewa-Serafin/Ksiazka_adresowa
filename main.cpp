@@ -664,4 +664,73 @@ void editPerson(vector<Person>& people, const vector<User>& users, const string&
     saveChangesToFile(people);
 }
 
+int main() {
+    vector<User> users;
+    vector<Person> people;
+    string loggedInUsername;
+
+    readUserFromFile(users);
+
+    bool isLoggedIn = false;
+    bool runProgram = true;
+
+    while (runProgram) {
+
+        int choice = loginMenu();
+
+        switch (choice) {
+        case 1:
+            userLogin(users, loggedInUsername, isLoggedIn);
+            readDataFromFile(people);
+            break;
+        case 2:
+            registerUser(users);
+            break;
+        case 3:
+            cout << "Do zobaczenia ponownie." << endl;
+            runProgram = false;
+            break;
+        default:
+            cout << "Nieprawidlowy wybor. Sprobuj ponownie." << endl;
+            break;
+        }
+
+        while(isLoggedIn) {
+
+            int choice = userMenu();
+
+            switch (choice) {
+            case 1:
+                addPerson(people, users, loggedInUsername);
+                break;
+            case 2:
+                searchByFirstName(people, users, loggedInUsername);
+                break;
+            case 3:
+                searchByLastName(people, users, loggedInUsername);
+                break;
+            case 4:
+                displayAllPeople(people, users, loggedInUsername);
+                break;
+            case 5:
+                deletePerson(people, users, loggedInUsername);
+                break;
+            case 6:
+                editPerson(people, users, loggedInUsername);
+                break;
+            case 7:
+                changeUserPassword(users);
+                break;
+            case 8:
+                loggedOut(isLoggedIn);
+                isLoggedIn = false;
+                break;
+            default:
+                cout << "Nieprawidlowy wybor. Sprobuj ponownie." << endl;
+                break;
+            }
+        }
+    }
+    return 0;
+}
 
