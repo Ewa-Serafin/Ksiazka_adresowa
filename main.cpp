@@ -258,3 +258,86 @@ void editPersonMenu() {
     cout << "6. Powrot do menu glownego" << endl;
     cout << endl;
 }
+void readDataFromFile(vector<Person>& people) {
+    people.clear();
+
+    ifstream file("address_book.txt", ios::in);
+    if (!file.is_open()) {
+        //cerr << "Nie udalo sie otworzyc pliku: address_book.txt" << endl;
+        file.open("address_book.txt", ios::out);
+        file.close();
+        return;
+    }
+
+    string line;
+    while (getline(file, line)) {
+        Person person;
+        stringstream ss(line);
+        string field;
+
+        getline(ss, field, '|');
+        person.id = atoi(field.c_str());
+
+        getline(ss, field, '|');
+        person.userID = atoi(field.c_str());
+
+        getline(ss, field, '|');
+        person.firstName = field;
+
+        getline(ss, field, '|');
+        person.lastName = field;
+
+        getline(ss, field, '|');
+        person.phoneNumber = field;
+
+        getline(ss, field, '|');
+        person.email = field;
+
+        getline(ss, field);
+        person.address = field;
+
+        people.push_back(person);
+    }
+    file.close();
+}
+
+void saveToFile(const vector<Person>& people) {
+    ofstream file("address_book.txt", ios::app);
+
+    if (file.is_open()) {
+        const Person& person = people.back();
+        {
+            file << person.id << '|'
+                 << person.userID << '|'
+                 << person.firstName << '|'
+                 << person.lastName << '|'
+                 << person.phoneNumber << '|'
+                 << person.email << '|'
+                 << person.address << endl;
+        }
+    } else {
+        cerr << "Nie udalo sie otworzyc pliku: " << "address_book.txt" << endl;
+    }
+    file.close();
+}
+
+void saveChangesToFile(const vector<Person>& people) {
+    ofstream file("temp_address_book.txt");
+    if (file.is_open()) {
+        for (const Person& person : people) {
+            file << person.id << '|'
+                 << person.userID << '|'
+                 << person.firstName << '|'
+                 << person.lastName << '|'
+                 << person.phoneNumber << '|'
+                 << person.email << '|'
+                 << person.address << endl;
+        }
+        file.close();
+
+        remove("address_book.txt");
+        rename("temp_address_book.txt", "address_book.txt");
+    } else {
+        cerr << "Nie udalo sie otworzyc pliku." << endl;
+    }
+}
