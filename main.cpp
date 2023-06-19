@@ -488,3 +488,21 @@ void searchByLastName(const vector<Person>& people, const vector<User>& users, c
     system("pause");
 }
 
+void displayEditableIDs(const vector<Person>& people, const vector<User>& users, const string& loggedInUsername) {
+
+    set<int> uniqueIDs;
+
+    for (const Person& person : people) {
+        if (person.userID == getLoggedInUserID(loggedInUsername, users)) {
+            uniqueIDs.insert(person.id);
+        }
+    }
+
+    cout << "Nr ID Twoich adresatow: ";
+    for (int id : uniqueIDs) {
+        cout << id << " ";
+    }
+    cout << endl << endl;
+}
+
+
