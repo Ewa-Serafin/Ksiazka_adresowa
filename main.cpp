@@ -387,3 +387,39 @@ void addPerson(vector<Person>& people, const vector<User>& users, const string& 
 
     saveToFile(people);
 }
+
+void displayPerson(const Person& person) {
+    cout << "ID:                " << person.id << endl;
+    cout << "Imie:              " << person.firstName << endl;
+    cout << "Nazwisko:          " << person.lastName << endl;
+    cout << "Numer telefonu:    " << person.phoneNumber << endl;
+    cout << "Adres e-mail:      " << person.email << endl;
+    cout << "Adres:             " << person.address << endl;
+}
+
+void displayAllPeople(const vector<Person>& people, const vector<User>& users, const string& loggedInUsername) {
+    system("cls");
+    bool foundPeople = false;
+    bool isFirstPerson = true;
+
+    for (const Person& person : people) {
+        if (person.userID == getLoggedInUserID(loggedInUsername, users)) {
+            if (isFirstPerson) {
+                cout << " >>LISTA WSZYSTKICH TWOICH ADRESATOW << " << endl;
+                isFirstPerson = false;
+            } else {
+                cout << "----------------------------------------" << endl;
+            }
+            displayPerson(person);
+            cout << endl;
+            foundPeople = true;
+        }
+    }
+
+    if (!foundPeople) {
+        cout << "Ksiazka adresowa jest pusta." << endl;
+    }
+
+    cout << endl;
+    system("pause");
+}
